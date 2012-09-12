@@ -1,0 +1,20 @@
+=================================
+MDSC 507: Advanced Bioinformatics
+ChIP-seq Data Analysis Pipeline
+Jeff Wintersinger
+July 30, 2012
+=================================
+
+Using the pipeline via the virtual machine supplied in my link is substantially
+easier than configuring its constituent components manually. Nevertheless, the
+process to do so follows. The pipeline has been tested on Arch Linux, but
+should work on any *nix OS (including OS X). Notably, it will not work on
+Windows.
+
+1. Ensure both R and Python 2.7 are installed.
+2. Install the Bioconductor packages ChIPpeakAnno and rtracklayer.
+3. Install bedtools, MACS, and MEME. Ensure the latter three are in the user's $PATH.
+4. Run scripts/download-data.sh to pull down the human reference sequence and example ChIP-seq data.
+5. Run Kepler. Open either of the workflows in the workflows/ directory.
+6. Adjust the workflow's parameters as necessary. At the least, you must change Base directory.
+7. Run the workflow.
