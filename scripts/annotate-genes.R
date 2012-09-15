@@ -25,7 +25,7 @@ nonOverlappingPeaksOutputFile <- paste(outputDir, '/nonOverlappingPeaks.gff', se
 #nonOverlappingPeaksOutput <- '../chippeakanno/non_overlapping_peaks.gff'
 
 data(TSS.human.NCBI36)
-peaksBasicName <- paste(peaksFileNamePrefix, '_peaks.bed', sep='')
+peaksBasicName <- paste(peaksFileNamePrefix, '_peaks.gff', sep='')
 peaksFullName <- paste(peaksFileNamePrefix, '_peaks.xls', sep='')
 
 peaksBasic <- import(peaksBasicName)
