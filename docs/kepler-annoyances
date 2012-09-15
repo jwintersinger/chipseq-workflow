@@ -26,8 +26,15 @@ Mouse scroll wheel doesn't pan, but zooms
 
 When I directed output of an RExpression actor to the "string" input of a text file writer, both the script's output *and* the script's source were written to the file
 
-Kepler provides three basic benefits:
-  1. Visualize workflow
-  2. Execute workflows in visual manner
-  3. Parallelization
-  4. Cleaner coding standards
+Too much of the interface is mouse-driven -- impossible to navigate efficiently using keyboard shortcuts
+
+While Kepler was executing a workflow, I tried to access documentation for a component by right-clicking it on the canvas and choosing Documentation > Display. This caused Kepler to lock up
+
+Interacting with the file picker (e.g., the one you receive by clicking File > Open) is frustrating -- no doubt due to Java's general badness
+  Scrolling horizontally to see all available files causes massive graphical corruption in the file listing display, such that file names can no longer be read
+    I must single-click on a file to cause the display to be redrawn, which resolves the corruption
+  If I single-click on a file to select it, then double-click in an attempt to open it, the file is not opened
+    Instead, the file enters the "rename" state, such that I must cilck outside it to cancel this, click on another file, then double-click the original file I intended to open
+
+At times, the ability to view documentation for components by right-clicking on canvas entities and selecting Documentation > Display stopped working
+  Restarting Kepler would fix this
