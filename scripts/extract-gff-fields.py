@@ -6,25 +6,9 @@
 
 import argparse
 import os
+import sys
 
-def parse_gff_line(line):
-  line = line.strip()
-  if line.startswith('#'):
-    return None
-
-  tokens = line.split()
-  fields = ('seqname', 'source', 'feature', 'start', 'end',
-            'score', 'strand', 'frame', 'group')
-  parsed = {}
-
-  for token_index in range(len(fields)):
-    field_name = fields[token_index]
-    parsed[field_name] = tokens[token_index]
-  for numeric_field_name in ('start', 'end'):
-    parsed[numeric_field_name] = int(parsed[numeric_field_name])
-  parsed['score'] = float(parsed['score'])
-
-  return parsed
+import gff
 
 def write_line(dest_file, token):
   dest_file.write('%s\n' % token)
@@ -40,14 +24,13 @@ def extract_fields(gff_path, output_dir):
   for output_type in output_types:
     path = os.path.join(output_dir, output_type)
     output_files[output_type] = open(path, 'w')
-  print output_files
 
   gff_input = open(gff_path)
   feature_types = set()
   prev_feature_start = None
 
   for input_line in gff_input:
-    parsed_gff = parse_gff_line(input_line)
+    parsed_gff = gff.parse_gff_line(input_line)
     if parsed_gff is None:
       continue
 

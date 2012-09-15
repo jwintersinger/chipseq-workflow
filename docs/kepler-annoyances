@@ -24,6 +24,8 @@ If I have a variable in a path to a file parameter, and I use "Browse" button to
 Mouse scroll wheel doesn't pan, but zooms
   Should pan by default, with Ctrl making it zoom
 
+When I directed output of an RExpression actor to the "string" input of a text file writer, both the script's output *and* the script's source were written to the file
+
 Kepler provides three basic benefits:
   1. Visualize workflow
   2. Execute workflows in visual manner
