@@ -1,0 +1,31 @@
+No way to temporarily disable ("comment out") actors
+  Bugzilla: http://bugzilla.ecoinformatics.org/show_bug.cgi?id=2921
+  Given long-running nature of pipeline components, a means of disabling some and testing others in isolation is essential
+    Easily done in shell script
+    Yet seems impossible in Kepler
+    One can, of course, test shell scripts manually, outside Kepler
+      But then must provide two code paths -- inputs when run from Kepler, and inputs when run standalone
+
+No way (at least so far as I can see) to rename already-created workflow
+  Mine is permanently named "chip," at least according to title displayed for Kepler window
+
+Clicking red stop button in Kepler won't always stop external processes that are in midst of execution
+  For example, clicking stop won't kill meme -- I must manually kill process to stop workflow
+
+Zip-based KAR format makes seeing what has changed since last commit via "git diff" impossible
+  If underlying XML were more easily exposed, one could at least get a sense of what has changed in this revision
+
+When documenting workflows by adding annotations, no easy way to align annotations with each other
+  I have a bunch of bullet points beneath one annotation
+    I must manually space them both horizontally and vertically; even then, no way to get proper alignment -- always off by a few pixels
+
+If I have a variable in a path to a file parameter, and I use "Browse" button to select a new file that is located underneath directory specified by variable, the variable is not reused, but instead whole path is replaced by an absolute path
+
+Mouse scroll wheel doesn't pan, but zooms
+  Should pan by default, with Ctrl making it zoom
+
+Kepler provides three basic benefits:
+  1. Visualize workflow
+  2. Execute workflows in visual manner
+  3. Parallelization
+  4. Cleaner coding standards
