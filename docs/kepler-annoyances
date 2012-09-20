@@ -38,3 +38,6 @@ Interacting with the file picker (e.g., the one you receive by clicking File > O
 
 At times, the ability to view documentation for components by right-clicking on canvas entities and selecting Documentation > Display stopped working
   Restarting Kepler would fix this
+
+External command execution is not terribly platform agnostic
+  Actor references "sh" on UNIX, "cmd" on Windows -- how easily will workflows transfer between platforms?
