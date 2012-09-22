@@ -3,31 +3,23 @@
 library(ChIPpeakAnno)
 library(rtracklayer)
 
+# TODO: rewrite to use optparse package in CRAN.
 cmdArgs <- commandArgs(trailingOnly = TRUE)
-peaksFileNamePrefix <- cmdArgs[1]
-ensemblToAffyMapFile <- cmdArgs[2]
-expressionLevelsFile <- cmdArgs[3]
-cellLine <- cmdArgs[4]
-expressionAnalysisThreshold <- as.numeric(cmdArgs[5])
-outputDir <- cmdArgs[6]
-ensemblMapperScript <- cmdArgs[7]
+peaksBasicName <- paste(cmdArgs[1])
+peaksFullName <- cmdArgs[2]
+ensemblToAffyMapFile <- cmdArgs[3]
+expressionLevelsFile <- cmdArgs[4]
+cellLine <- cmdArgs[5]
+expressionAnalysisThreshold <- as.numeric(cmdArgs[6])
+outputDir <- cmdArgs[7]
+ensemblMapperScript <- cmdArgs[8]
+annotationDb = 'org.Hs.eg.db'
+
 allPeaksOutputFile <- paste(outputDir, '/allPeaks.gff', sep='')
 overlappingPeaksOutputFile <- paste(outputDir, '/overlappingPeaks.gff', sep='')
 nonOverlappingPeaksOutputFile <- paste(outputDir, '/nonOverlappingPeaks.gff', sep='')
 
-#peaksName <- '../macs/lin9_peaks'
-#ensemblToAffyMap <- '../../data/expression/mapped-names'
-#expressionLevels <- '../../data/expression/U133AGNF1B.gcrma.avg.csv'
-#cellLine <- 'CD4+_Tcells'
-#expressionAnalysisThreshold <- 10
-#allPeaksOutput <- '../chippeakanno/all_peaks.gff'
-#overlappingPeaksOutput <- '../chippeakanno/overlapping_peaks.gff'
-#nonOverlappingPeaksOutput <- '../chippeakanno/non_overlapping_peaks.gff'
-
 data(TSS.human.NCBI36)
-peaksBasicName <- paste(peaksFileNamePrefix, '_peaks.gff', sep='')
-peaksFullName <- paste(peaksFileNamePrefix, '_peaks.xls', sep='')
-
 peaksBasic <- import(peaksBasicName)
 peaksFull <- read.table(peaksFullName, header=T)
 
@@ -47,6 +39,15 @@ hist(y, xlab = 'Distance to nearest TSS', main = '', breaks = 100,xlim = c(min(y
 annotatedPeaksDf <- as.data.frame(annotatedPeaks)
 pie(table(annotatedPeaksDf [as.character(annotatedPeaksDf$fromOverlappingOrNearest) == "Overlapping" | (as.character(annotatedPeaksDf$fromOverlappingOrNearest) == "NearestStart" & !annotatedPeaksDf$peak %in% annotatedPeaksDf[as.character(annotatedPeaksDf$fromOverlappingOrNearest) == "Overlapping",]$peak),]$insideFeature))
 dev.off()
+
+# Add HUGO gene symbols.
+annotatedPeaks <- addGeneIDs(annotatedPeaks, annotationDb, c('symbol'))
+
+# Add gene ontology information.
+enrichedGO <- getEnrichedGO(annotatedPeaks, orgAnn=annotationDb)
+write.csv(enrichedGO$bp, paste(outputDir, '/biological_processes.csv', sep=''))
+write.csv(enrichedGO$cc, paste(outputDir, '/cellcular_components.csv', sep=''))
+write.csv(enrichedGO$mf, paste(outputDir, '/molecular_functions.csv', sep=''))
 
 # Add gene expression data.
 cmd <- paste(ensemblMapperScript, ensemblToAffyMapFile, expressionLevelsFile, cellLine, sep = ' ')
