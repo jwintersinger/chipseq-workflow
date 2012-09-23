@@ -1,1 +1,3 @@
 Disable allowDisconnectedGraphs for director
+Do I need to sort my GFF file for peak stats/histograms actor to work?
+Look into proper path handling (i.e., / -> \) on Windows
