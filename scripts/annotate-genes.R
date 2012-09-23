@@ -1,7 +1,7 @@
 # Annotate genes via Bioconductor's ChIPpeakAnno. For each peak, find the gene
 # whose TSS is closest, then determine its expression level.
-library(ChIPpeakAnno)
-library(rtracklayer)
+suppressPackageStartupMessages(library(ChIPpeakAnno))
+suppressPackageStartupMessages(library(rtracklayer))
 
 # TODO: rewrite to use optparse package in CRAN.
 cmdArgs <- commandArgs(trailingOnly = TRUE)
@@ -13,18 +13,19 @@ cellLine <- cmdArgs[5]
 expressionAnalysisThreshold <- as.numeric(cmdArgs[6])
 outputDir <- cmdArgs[7]
 ensemblMapperScript <- cmdArgs[8]
-annotationDb = 'org.Hs.eg.db'
+annotationDb <- cmdArgs[9]
+referenceAssembly <- cmdArgs[10]
 
 allPeaksOutputFile <- paste(outputDir, '/allPeaks.gff', sep='')
 overlappingPeaksOutputFile <- paste(outputDir, '/overlappingPeaks.gff', sep='')
 nonOverlappingPeaksOutputFile <- paste(outputDir, '/nonOverlappingPeaks.gff', sep='')
 
-data(TSS.human.NCBI36)
 peaksBasic <- import(peaksBasicName)
 peaksFull <- read.table(peaksFullName, header=T)
 
 # Annotate peaks
-annotatedPeaks <- annotatePeakInBatch(peaksBasic, AnnotationData=TSS.human.NCBI36)
+data(list=c(referenceAssembly))
+annotatedPeaks <- annotatePeakInBatch(peaksBasic, AnnotationData=get(referenceAssembly))
 # Sort peaks by "peak" column
 annotatedPeaks <- annotatedPeaks[with(annotatedPeaks, order(peak)),]
 # Add score column.
