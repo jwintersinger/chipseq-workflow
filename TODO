@@ -1,9 +1,6 @@
-Disable allowDisconnectedGraphs for director
-Do I need to sort my GFF file for peak stats/histograms actor to work?
-Look into proper path handling (i.e., / -> \) on Windows
-Investigate supporting gene expression levels for non-human data sets
-Update R and Python scripts to use named rather than positional parameters
-
+==========
+Big things
+==========
 Location analysis:
   All peaks
   Peaks in proximal promoter
@@ -12,5 +9,22 @@ Location analysis:
   Peaks inside a gene
   Distal peaks (> 20 Kb from any TSS or 3' end)
   Histograms of peak locations (to be added later)
-Need:
-  Distance from peak start to nearest TSS (either direction)
+
+  Need:
+    Distance from peak start to nearest TSS (either direction)
+
+Pathway analysis
+Example peaks
+
+============
+Small things
+============
+Disable allowDisconnectedGraphs for director
+Do I need to sort my GFF file for peak stats/histograms actor to work?
+Investigate supporting gene expression levels for non-human data sets
+Update Python scripts to use named rather than positional parameters
+Deal with Windows path munging if necessary -- foward slash -> backslash
+  Good means of dealing with this in Python: os.path.normpath
+
+Break workflow into modular components
+  Establish test suite to verify proper behaviour
