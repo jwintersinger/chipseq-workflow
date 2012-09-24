@@ -12,3 +12,5 @@ Location analysis:
   Peaks inside a gene
   Distal peaks (> 20 Kb from any TSS or 3' end)
   Histograms of peak locations (to be added later)
+Need:
+  Distance from peak start to nearest TSS (either direction)

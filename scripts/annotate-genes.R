@@ -66,19 +66,29 @@ parse_arguments <- function() {
   return(opts)
 }
 
-annotate_peaks <- function(basic_peaks_filename, extended_peaks_filename, reference_assembly, annotation_db) {
+annotate_peaks <- function(
+  basic_peaks_filename,
+  extended_peaks_filename,
+  reference_assembly,
+  annotation_db,
+  feature_location # 'TSS' or 'geneEnd'
+) {
   peaks_basic <- import(basic_peaks_filename)
   peaks_extended <- read.table(extended_peaks_filename, header=T)
 
   # Annotate peaks
   data(list=c(reference_assembly))
-  annotated_peaks <- annotatePeakInBatch(peaks_basic, AnnotationData=get(reference_assembly))
+  annotated_peaks <- annotatePeakInBatch(
+    peaks_basic,
+    PeakLocForDistance = 'middle',
+    FeatureLocForDistance = 'TSS',
+    AnnotationData = get(reference_assembly)
+  )
   # Sort peaks by "peak" column
   annotated_peaks <- annotated_peaks[with(annotated_peaks, order(peak)),]
   # Add score column.
   annotated_peaks$score <- peaks_basic$score
   # Add HUGO gene symbols.
-  print(annotation_db)
   annotated_peaks <- addGeneIDs(annotated_peaks, annotation_db, c('symbol'))
 
   return(annotated_peaks)
@@ -99,7 +109,6 @@ generate_histograms <- function(annotated_peaks, output_dir) {
 
 write_gene_ontology_info <- function(annotated_peaks, output_dir, annotation_db) {
   # Add gene ontology information.
-  print(annotation_db)
   enriched_go <- getEnrichedGO(annotated_peaks, orgAnn=annotation_db)
   write.csv(enriched_go$bp, paste(output_dir, '/biological_processes.csv', sep=''))
   write.csv(enriched_go$cc, paste(output_dir, '/cellcular_components.csv', sep=''))
@@ -148,8 +157,13 @@ main <- function() {
   opts <- parse_arguments()
 
 
-  annotated_peaks <- annotate_peaks(opts$basic_peaks, opts$extended_peaks,
-                                    opts$reference_assembly, opts$annotation_db)
+  annotated_peaks <- annotate_peaks(
+    opts$basic_peaks,
+    opts$extended_peaks,
+    opts$reference_assembly,
+    opts$annotation_db,
+    'TSS'
+  )
   generate_histograms(annotated_peaks, opts$output_dir)
   write_gene_ontology_info(annotated_peaks, opts$output_dir, opts$annotation_db)
   annotated_peaks <- add_gene_expression_data(opts$ensembl_mapper_script, opts$ensembl_to_affy_map,
