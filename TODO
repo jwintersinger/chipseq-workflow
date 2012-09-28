@@ -14,3 +14,28 @@ Location analysis:
   Histograms of peak locations (to be added later)
 Need:
   Distance from peak start to nearest TSS (either direction)
+
+Immediate roadmap:
+  Location analysis:
+    Most interesting: peaks in proximal promoter
+      Proximal promoter: -500 to +1500 nt around around TSS
+    Do via overlapping regions -- if peak region overlaps proximal promoter, say that peak is within proximal promoter
+      Problem: ChIPpeakAnno works by taking single point for peak -- either start or middle
+        May need to write own script
+      
+  Gene ontology
+    Do via gene names, not chromosome locatinos
+      Gene names source: genes with peaks in proximal promoter
+  Pathway analysis
+    ChIPpeakAnno can do basic form of this
+    Otherwise: DAVID, etc.
+  Peak examples
+    Look at bringing into UCSC
+
+Misc:
+  Bring our actors into Kepler -- add to internal library
+    Modularize actors, build test suite around them
+      Don't need unit tests necessarily -- manual good enough to start with
+  Ensure I'm using "traditional" transcripts -- from RefSeq
+    Sometimes we have bunch of genes together that are transcribed as single unit, then (perhaps) modified post-transcriptionally to separate
+      This we don't want -- plays havoc with analysis of TSS
