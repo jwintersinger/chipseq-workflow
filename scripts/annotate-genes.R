@@ -107,14 +107,13 @@ generate_histograms <- function(annotated_peaks, output_dir) {
   dev.off()
 }
 
-write_gene_ontology_info <- function(annotated_peaks, output_dir, annotation_db) {
+write_gene_ontology_info <- function(ensembl_ids, output_dir, annotation_db) {
   # Add gene ontology information.
-  enriched_go <- getEnrichedGO(annotated_peaks, orgAnn=annotation_db)
+  enriched_go <- getEnrichedGO(ensembl_ids, orgAnn=annotation_db)
   write.csv(enriched_go$bp, paste(output_dir, '/biological_processes.csv', sep=''))
   write.csv(enriched_go$cc, paste(output_dir, '/cellcular_components.csv', sep=''))
   write.csv(enriched_go$mf, paste(output_dir, '/molecular_functions.csv', sep=''))
 }
-
 
 add_gene_expression_data <- function(ensembl_mapper_script, ensembl_to_affy_map,
                                      expression_levels_file, cell_line, annotated_peaks) {
@@ -153,9 +152,20 @@ perform_location_analysis <- function(annotated_peaks, expression_threshold) {
   return(list(overlapping=overlapping_peaks, non_overlapping=non_overlapping_peaks))
 }
 
+find_peaks_in_proximal_promoters <- function(
+  annotated_peaks,
+  tss_upstream_distance,
+  tss_downstream_distance
+) {
+  # Is peak middle within [-tss_upstream_distance, tss_downstream_distance] of nearest TSS?
+  peak_selector <- (-tss_upstream_distance <= annotated_peaks$distancetoFeature &
+                     annotated_peaks$distancetoFeature <= tss_downstream_distance)
+  peaks_in_proximal_promoters <- annotated_peaks[peak_selector,]
+  return(peaks_in_proximal_promoters)
+}
+
 main <- function() {
   opts <- parse_arguments()
-
 
   annotated_peaks <- annotate_peaks(
     opts$basic_peaks,
@@ -164,12 +174,14 @@ main <- function() {
     opts$annotation_db,
     'TSS'
   )
+
+  peaks_in_proximal_promoters <- find_peaks_in_proximal_promoters(annotated_peaks, 500, 1500)
+  write_gene_ontology_info(peaks_in_proximal_promoters$feature, opts$output_dir, opts$annotation_db)
   generate_histograms(annotated_peaks, opts$output_dir)
-  write_gene_ontology_info(annotated_peaks, opts$output_dir, opts$annotation_db)
+
   annotated_peaks <- add_gene_expression_data(opts$ensembl_mapper_script, opts$ensembl_to_affy_map,
                            opts$expression_levels, opts$cell_line, annotated_peaks)
   segregated_peaks <- perform_location_analysis(annotated_peaks, opts$expression_threshold)
-
 
   all_peaks_output <- paste(opts$output_dir, '/allPeaks.gff', sep='')
   overlapping_peaks_output <- paste(opts$output_dir, '/overlappingPeaks.gff', sep='')
