@@ -37,6 +37,11 @@ Misc:
     Sometimes we have bunch of genes together that are transcribed as single unit, then (perhaps) modified post-transcriptionally to separate
       This we don't want -- plays havoc with analysis of TSS
 
+Questions:
+  For location analysis, what constitutes "inside" gene?
+    Gene includes peak, peak includes gene, gene overlaps start, gene overlaps end?
+  Why can't I chain multiple commands in Kepler?
+
 ============
 Small things
 ============
