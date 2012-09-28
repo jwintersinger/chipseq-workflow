@@ -1,9 +1,6 @@
-Disable allowDisconnectedGraphs for director
-Do I need to sort my GFF file for peak stats/histograms actor to work?
-Look into proper path handling (i.e., / -> \) on Windows
-Investigate supporting gene expression levels for non-human data sets
-Update R and Python scripts to use named rather than positional parameters
-
+==========
+Big things
+==========
 Location analysis:
   All peaks
   Peaks in proximal promoter
@@ -39,3 +36,16 @@ Misc:
   Ensure I'm using "traditional" transcripts -- from RefSeq
     Sometimes we have bunch of genes together that are transcribed as single unit, then (perhaps) modified post-transcriptionally to separate
       This we don't want -- plays havoc with analysis of TSS
+
+============
+Small things
+============
+Disable allowDisconnectedGraphs for director
+Do I need to sort my GFF file for peak stats/histograms actor to work?
+Investigate supporting gene expression levels for non-human data sets
+Update Python scripts to use named rather than positional parameters
+Deal with Windows path munging if necessary -- foward slash -> backslash
+  Good means of dealing with this in Python: os.path.normpath
+
+Break workflow into modular components
+  Establish test suite to verify proper behaviour
