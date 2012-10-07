@@ -43,6 +43,14 @@ Questions:
     Gene includes peak, peak includes gene, gene overlaps start, gene overlaps end?
   Why can't I chain multiple commands in Kepler?
 
+Break up workflow
+  Annotate peaks
+  Generate histograms
+  Gene ontology
+  Gene expression data
+  Location analysis
+
+
 ============
 Small things
 ============

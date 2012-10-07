@@ -45,8 +45,10 @@ main <- function() {
   tss_df <- as.data.frame(tss_list)
 
   tss_df$space <- sapply(tss_df$space, massage_chromsome_name)
+  groups <- paste('transcript', 1:nrow(tss_df), sep='')
   gff_df <- data.frame(tss_df$space, tss_list_name, tss_df$names,
-                       tss_df$start, tss_df$end, '.', tss_df$strand)
+                       tss_df$start, tss_df$end, '.', tss_df$strand,
+                       '.', groups)
   write.table(gff_df, output_filename, sep='\t', quote=FALSE, col.names=FALSE, row.names=FALSE)
 }
 
