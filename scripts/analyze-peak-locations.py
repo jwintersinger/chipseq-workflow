@@ -3,17 +3,18 @@ import argparse
 import gff
 import os
 
-def prepare_reference_sets(transcripts_filename):
+def prepare_reference_sets(transcripts_filename, proximal_promoter_boundaries,
+                           proximal_gene_end_boundaries):
   reference_sets = {
-    'proximal_tss': [],
-    'proximal_tes': [],
-    'inside_gene': [],
+    'proximal_tss': {},
+    'proximal_tes': {},
+    'inside_gene': {},
   }
 
-  proximal_tss_upstream_nts = -1500
-  proximal_tss_downstream_nts = 500
-  proximal_tes_upstream_nts = -2000
-  proximal_tes_downstream_nts = 300
+  proximal_tss_upstream_nts = -proximal_promoter_boundaries[0]
+  proximal_tss_downstream_nts = proximal_promoter_boundaries[1]
+  proximal_tes_upstream_nts = -proximal_gene_end_boundaries[0]
+  proximal_tes_downstream_nts = proximal_gene_end_boundaries[1]
 
   transcripts_file = open(transcripts_filename)
   # Remember, in GFF:
@@ -21,18 +22,23 @@ def prepare_reference_sets(transcripts_filename):
   #   * Ranges are inclusive -- i.e., they are defined as [start, end]
   for line in transcripts_file:
     transcript = gff.parse_gff_line(line)
+    seqname = transcript['seqname']
     start = transcript['start']
     end = transcript['end']
 
-    reference_sets['proximal_tss'].append((
+    for set_name in ('proximal_tss', 'proximal_tes', 'inside_gene'):
+      if seqname not in reference_sets[set_name]:
+        reference_sets[set_name][seqname] = []
+
+    reference_sets['proximal_tss'][seqname].append((
       start + proximal_tss_upstream_nts,
       start + proximal_tss_downstream_nts
     ))
-    reference_sets['proximal_tss'].append((
+    reference_sets['proximal_tes'][seqname].append((
       end + proximal_tes_upstream_nts,
       end + proximal_tes_downstream_nts
     ))
-    reference_sets['inside_gene'].append((
+    reference_sets['inside_gene'][seqname].append((
       start + proximal_tss_downstream_nts + 1,
       end + proximal_tes_upstream_nts - 1
     ))
@@ -43,9 +49,10 @@ def prepare_reference_sets(transcripts_filename):
 def analyze_peak(peak_line, reference_sets, output_files):
   peak = gff.parse_gff_line(peak_line)
   peak_range = (peak['start'], peak['end'])
+  seqname = peak['seqname']
 
   for range_type in ('proximal_tss', 'proximal_tes', 'inside_gene'):
-    for location_range in reference_sets[range_type]:
+    for location_range in reference_sets[range_type][seqname]:
       if ranges_overlap(location_range, peak_range):
         output_files[range_type].write(peak_line)
         return
@@ -79,16 +86,27 @@ def ranges_overlap(a, b):
   return x1 <= y2 and x2 <= y1
  
 def parse_args():
-  parser = argparse.ArgumentParser(description='Analyze peak locations')
-  parser.add_argument('peaks_file', nargs=1, help='Path to GFF-formatted peaks file')
-  parser.add_argument('transcripts_file', nargs=1, help='Path to transcripts file')
-  parser.add_argument('output_dir', nargs=1, help='Path to ouput directory')
+  parser = argparse.ArgumentParser(description='Analyze peak locations.')
+  parser.add_argument('peaks_file', help='Path to GFF-formatted peaks file')
+  parser.add_argument('transcripts_file', help='Path to transcripts file')
+  parser.add_argument('output_dir', help='Path to ouput directory')
+  parser.add_argument('--proximal-tss-upstream-nts', type=int, default=500,
+    help='Number of nucleotides upstream of TSS that define proximal promoter boundary')
+  parser.add_argument('--proximal-tss-downstream-nts', type=int, default=1500,
+    help='Number of nucleotides downstream of TSS that define proximal promoter boundary')
+  parser.add_argument('--proximal-tes-upstream-nts', type=int, default=1500,
+    help='Number of nucleotides upstream of transcription end site that define gene end boundary')
+  parser.add_argument('--proximal-tes-downstream-nts', type=int, default=500,
+    help='Number of nucleotides downstream of transcription end site that define gene end boundary')
   return parser.parse_args()
 
 def main():
   args = parse_args()
-  reference_sets = prepare_reference_sets(args.transcripts_file[0])
-  analyze_peak_locations(args.peaks_file[0], reference_sets, args.output_dir[0])
+  reference_sets = prepare_reference_sets(args.transcripts_file,
+    (args.proximal_tss_upstream_nts, args.proximal_tss_downstream_nts),
+    (args.proximal_tes_upstream_nts, args.proximal_tes_downstream_nts),
+  )
+  analyze_peak_locations(args.peaks_file, reference_sets, args.output_dir)
 
 if __name__ == '__main__':
   main()
