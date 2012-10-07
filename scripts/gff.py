@@ -11,8 +11,13 @@ def parse_gff_line(line):
   for token_index in range(len(fields)):
     field_name = fields[token_index]
     parsed[field_name] = tokens[token_index]
-  for numeric_field_name in ('start', 'end'):
-    parsed[numeric_field_name] = int(parsed[numeric_field_name])
-  parsed['score'] = float(parsed['score'])
+
+  for intergral_field_name in ('start', 'end'):
+    parsed[intergral_field_name] = int(parsed[intergral_field_name])
+
+  if parsed['score'] == '.':
+    parsed['score'] = None
+  else:
+    parsed['score'] = float(parsed['score'])
 
   return parsed
