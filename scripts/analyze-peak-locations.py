@@ -3,6 +3,50 @@ import argparse
 import gff
 import os
 
+# In below three functions:
+#   * strand should be +, -, or ., as per GFF spec.
+#   * start and end refer to coordinates on chromosome, with start <= end.
+#   * upstream and downstream refer to number of nucleotides in respective
+#     direction relative to feature, with strandedness taken into account
+#     (meaning that on - strand, upstream of feature is farther to right
+#     [i.e., larger] in chromosome coordinates).
+def calculate_proximal_tss_coords(start, end, strand, upstream, downstream):
+  if strand in ('+', '.'):
+    left = start - upstream
+    right = start + downstream
+  elif strand == '-':
+    left = end - downstream
+    right = end + upstream
+  else:
+    raise Exception('Unknown strand %s' % strand)
+  return (left, right)
+
+def calculate_proximal_tes_coords(start, end, strand, upstream, downstream):
+  if strand in ('+', '.'):
+    left = end - upstream
+    right = end + downstream
+  elif strand == '-':
+    left = start - downstream
+    right = start + upstream
+  else:
+    raise Exception('Unknown strand %s' % strand)
+  return (left, right)
+
+def calculate_inside_gene_coords(
+    start, end, strand,
+    tss_upstream, tss_downstream,
+    tes_upstream, tes_downstream
+):
+  if strand in ('+', '.'):
+    left = start + tss_downstream + 1
+    right = end - tes_upstream - 1
+  elif strand == '-':
+    left = start + tes_upstream + 1
+    right = end - tss_downstream - 1
+  else:
+    raise Exception('Unknown strand %s' % strand)
+  return (left, right)
+
 def prepare_reference_sets(transcripts_filename, proximal_promoter_boundaries,
                            proximal_gene_end_boundaries):
   reference_sets = {
@@ -11,9 +55,9 @@ def prepare_reference_sets(transcripts_filename, proximal_promoter_boundaries,
     'inside_gene': {},
   }
 
-  proximal_tss_upstream_nts = -proximal_promoter_boundaries[0]
+  proximal_tss_upstream_nts = proximal_promoter_boundaries[0]
   proximal_tss_downstream_nts = proximal_promoter_boundaries[1]
-  proximal_tes_upstream_nts = -proximal_gene_end_boundaries[0]
+  proximal_tes_upstream_nts = proximal_gene_end_boundaries[0]
   proximal_tes_downstream_nts = proximal_gene_end_boundaries[1]
 
   transcripts_file = open(transcripts_filename)
@@ -25,23 +69,28 @@ def prepare_reference_sets(transcripts_filename, proximal_promoter_boundaries,
     seqname = transcript['seqname'].lower()
     start = transcript['start']
     end = transcript['end']
+    strand = transcript['strand']
 
     for set_name in ('proximal_tss', 'proximal_tes', 'inside_gene'):
       if seqname not in reference_sets[set_name]:
         reference_sets[set_name][seqname] = []
 
-    reference_sets['proximal_tss'][seqname].append((
-      start + proximal_tss_upstream_nts,
-      start + proximal_tss_downstream_nts
-    ))
-    reference_sets['proximal_tes'][seqname].append((
-      end + proximal_tes_upstream_nts,
-      end + proximal_tes_downstream_nts
-    ))
-    reference_sets['inside_gene'][seqname].append((
-      start + proximal_tss_downstream_nts + 1,
-      end + proximal_tes_upstream_nts - 1
-    ))
+    reference_sets['proximal_tss'][seqname].append(
+      calculate_proximal_tss_coords(start, end, strand,
+        proximal_tss_upstream_nts, proximal_tss_downstream_nts
+      )
+    )
+    reference_sets['proximal_tes'][seqname].append(
+      calculate_proximal_tes_coords(start, end, strand,
+        proximal_tes_upstream_nts, proximal_tes_downstream_nts
+      )
+    )
+    reference_sets['inside_gene'][seqname].append(
+      calculate_inside_gene_coords(start, end, strand,
+        proximal_tss_upstream_nts, proximal_tss_downstream_nts,
+        proximal_tes_upstream_nts, proximal_tes_downstream_nts
+      )
+    )
 
   transcripts_file.close()
   return reference_sets
