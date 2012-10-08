@@ -22,7 +22,7 @@ def prepare_reference_sets(transcripts_filename, proximal_promoter_boundaries,
   #   * Ranges are inclusive -- i.e., they are defined as [start, end]
   for line in transcripts_file:
     transcript = gff.parse_gff_line(line)
-    seqname = transcript['seqname']
+    seqname = transcript['seqname'].lower()
     start = transcript['start']
     end = transcript['end']
 
@@ -49,9 +49,11 @@ def prepare_reference_sets(transcripts_filename, proximal_promoter_boundaries,
 def analyze_peak(peak_line, reference_sets, output_files):
   peak = gff.parse_gff_line(peak_line)
   peak_range = (peak['start'], peak['end'])
-  seqname = peak['seqname']
+  seqname = peak['seqname'].lower()
 
   for range_type in ('proximal_tss', 'proximal_tes', 'inside_gene'):
+    if seqname not in reference_sets[range_type]:
+      continue
     for location_range in reference_sets[range_type][seqname]:
       if ranges_overlap(location_range, peak_range):
         output_files[range_type].write(peak_line)
