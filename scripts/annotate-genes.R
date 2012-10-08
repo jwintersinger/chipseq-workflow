@@ -181,8 +181,8 @@ main <- function() {
   write_gene_ontology_info(peaks_in_proximal_promoters$feature, opts$output_dir, opts$annotation_db)
   generate_histograms(annotated_peaks, opts$output_dir)
 
-  #annotated_peaks <- add_gene_expression_data(opts$ensembl_mapper_script, opts$ensembl_to_affy_map,
-                           #opts$expression_levels, opts$cell_line, annotated_peaks)
+  annotated_peaks <- add_gene_expression_data(opts$ensembl_mapper_script, opts$ensembl_to_affy_map,
+                           opts$expression_levels, opts$cell_line, annotated_peaks)
   segregated_peaks <- perform_location_analysis(annotated_peaks, opts$expression_threshold)
 
   all_peaks_output <- paste(opts$output_dir, '/allPeaks.gff', sep='')
@@ -193,7 +193,6 @@ main <- function() {
   export(annotated_peaks, all_peaks_output, export_format)
   export(segregated_peaks$overlapping, overlapping_peaks_output, export_format)
   export(segregated_peaks$non_overlapping, non_overlapping_peaks_output, export_format)
-  export(peaks_in_proximal_promoters$feature, peaks_in_proximal_promoters_output, export_format)
 }
 
 main()
