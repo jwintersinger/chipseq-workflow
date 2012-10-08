@@ -17,13 +17,23 @@ parse_arguments <- function() {
   return(args)
 }
 
-massage_chromsome_name <- function(x) {
-  if(x %in% c(1:23, 'X', 'Y')) {
-    return(paste('chr', x, sep=''))
+massage_chromsome_name <- function(chrom) {
+  if(chrom %in% c(1:23, 'X', 'Y')) {
+    return(paste('chr', chrom, sep=''))
   } else {
     # I don't know why this must be converted to a string -- otherwise, it
     # returns a nonsensical numerical value.
-    return(toString(x))
+    return(toString(chrom))
+  }
+}
+
+massage_strand_name <- function(strand_name) {
+  if(strand_name > 0) {
+    return('+')
+  } else if(strand_name < 0) {
+    return('-')
+  } else {
+    return('.')
   }
 }
 
@@ -45,7 +55,9 @@ main <- function() {
   tss_df <- as.data.frame(tss_list)
 
   tss_df$space <- sapply(tss_df$space, massage_chromsome_name)
+  tss_df$strand <- sapply(tss_df$strand, massage_strand_name)
   groups <- paste('transcript', 1:nrow(tss_df), sep='')
+
   gff_df <- data.frame(tss_df$space, tss_list_name, tss_df$names,
                        tss_df$start, tss_df$end, '.', tss_df$strand,
                        '.', groups)
