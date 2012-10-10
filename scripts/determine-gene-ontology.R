@@ -70,7 +70,7 @@ main <- function() {
       go_data$BH.adjusted.p.value
     )
     output_filename = paste(opts$output_dir, '/', go_class, '.csv', sep='')
-    write.table(go_df, output_filename, sep='\t', quote=FALSE, col.names=FALSE, row.names=FALSE)
+    write.table(go_df, output_filename, sep='\t', quote=FALSE, col.names=TRUE, row.names=FALSE)
   }
 }
 
