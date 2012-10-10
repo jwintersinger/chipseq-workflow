@@ -17,7 +17,7 @@ parse_arguments <- function() {
   return(args)
 }
 
-massage_chromsome_name <- function(chrom) {
+massage_chromosome_name <- function(chrom) {
   if(chrom %in% c(1:23, 'X', 'Y')) {
     return(paste('chr', chrom, sep=''))
   } else {
@@ -54,7 +54,7 @@ main <- function() {
   tss_list <- get(tss_list_name)
   tss_df <- as.data.frame(tss_list)
 
-  tss_df$space <- sapply(tss_df$space, massage_chromsome_name)
+  tss_df$space <- sapply(tss_df$space, massage_chromosome_name)
   tss_df$strand <- sapply(tss_df$strand, massage_strand_name)
   groups <- paste('transcript', 1:nrow(tss_df), sep='')
 
