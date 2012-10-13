@@ -57,19 +57,25 @@ main <- function() {
     multiAdjMethod = opts$p_value_adjuster
   )
 
+  output_filenames = list(
+    bp = 'biological_processes',
+    mf = 'molecular_functions',
+    cc = 'cellular_components'
+  )
+
   for(go_class in c('bp', 'mf', 'cc')) {
     go_data <- gene_ontology[[go_class]]
-    # Sort by count.InGenome column.
-    go_data <- go_data[with(go_data, order(count.InGenome, decreasing = TRUE)),]
+    # Sort by count.InDataset column.
+    go_data <- go_data[with(go_data, order(count.InDataset, decreasing = TRUE)),]
     go_df <- data.frame(
-      go_data$EntrezID,
-      go_data$go.id,
-      go_data$go.term,
-      go_data$count.InDataset,
-      go_data$count.InGenome,
-      go_data$BH.adjusted.p.value
+      'entrez_id' = go_data$EntrezID,
+      'go_id' = go_data$go.id,
+      'go_term' = go_data$go.term,
+      'count_in_dataset' = go_data$count.InDataset,
+      'count_in_genome' = go_data$count.InGenome,
+      'p_value' = go_data$BH.adjusted.p.value
     )
-    output_filename = paste(opts$output_dir, '/', go_class, '.csv', sep='')
+    output_filename = paste(opts$output_dir, '/', output_filenames[[go_class]], '.csv', sep='')
     write.table(go_df, output_filename, sep='\t', quote=FALSE, col.names=TRUE, row.names=FALSE)
   }
 }
