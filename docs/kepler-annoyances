@@ -41,3 +41,8 @@ At times, the ability to view documentation for components by right-clicking on 
 
 External command execution is not terribly platform agnostic
   Actor references "sh" on UNIX, "cmd" on Windows -- how easily will workflows transfer between platforms?
+External execution:
+  Should be able to specify custom ports to actor that are then used in composing command arguments
+    This would make use of external tools more transparent -- similar to built-in tools
+
+What is the difference between Run Composite Actor and CompositeActor?
