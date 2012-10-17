@@ -1,33 +1,16 @@
 ==========
 Big things
 ==========
-Location analysis:
-  All peaks
-  Peaks in proximal promoter
-    i.e., peaks within upstream_nts (-5000) to downstream_nts (+500) from TSS
-  Peaks near 3' TSS end site
-  Peaks inside a gene
-  Distal peaks (> 20 Kb from any TSS or 3' end)
-  Histograms of peak locations (to be added later)
-Need:
-  Distance from peak start to nearest TSS (either direction)
+Location analysis: Generate histogram showing peak locations
 
-Immediate roadmap:
-  Location analysis:
-    Most interesting: peaks in proximal promoter
-      Proximal promoter: -500 to +1500 nt around around TSS
-    Do via overlapping regions -- if peak region overlaps proximal promoter, say that peak is within proximal promoter
-      Problem: ChIPpeakAnno works by taking single point for peak -- either start or middle
-        May need to write own script
-      
-  Gene ontology
-    Do via gene names, not chromosome locatinos
-      Gene names source: genes with peaks in proximal promoter
-  Pathway analysis
-    ChIPpeakAnno can do basic form of this
-    Otherwise: DAVID, etc.
-  Peak examples
-    Look at bringing into UCSC
+Gene ontology
+  Do via gene names, not chromosome locatinos
+    Gene names source: genes with peaks in proximal promoter
+Pathway analysis
+  ChIPpeakAnno can do basic form of this
+  Otherwise: DAVID, etc.
+Peak examples
+  Look at bringing into UCSC
 
 Misc:
   Bring our actors into Kepler -- add to internal library
@@ -37,19 +20,8 @@ Misc:
     Sometimes we have bunch of genes together that are transcribed as single unit, then (perhaps) modified post-transcriptionally to separate
       This we don't want -- plays havoc with analysis of TSS
 
-
 Questions:
-  For location analysis, what constitutes "inside" gene?
-    Gene includes peak, peak includes gene, gene overlaps start, gene overlaps end?
   Why can't I chain multiple commands in Kepler?
-
-Break up workflow
-  Annotate peaks
-  Generate histograms
-  Gene ontology
-  Gene expression data
-  Location analysis
-
 
 ============
 Small things
@@ -63,51 +35,3 @@ Deal with Windows path munging if necessary -- foward slash -> backslash
 
 Break workflow into modular components
   Establish test suite to verify proper behaviour
-
-
-==================
-2012.09.28 meeting
-==================
-Stats stuff:
-  Statistical power: more statistical power => better chance of *not* missing things that are significant
-    If you compare a whole bunch of things, you have more likelihood of finding apparent correlation by chance
-      Compare BHSc students vs. main campus bio students across whole bunch of categories
-      Do enough comparisons, you will find apparent correlation
-        Like, say, BHSc students have same astrological sign, and main campus students don't
-      So, must correct for multiple measurements -- essentially lowers p-values to compensate
-        Traditional (Bonferoni?): given bunch of t-tests, just divide p-value for each measurement by number of t-tests
-        Benjamini-H(something) is good default choice for our needs
-  Parametric vs. non-parametric:
-    Parametric has greater statistical power because it encodes assumptions about distribution of data -- e.g., normal, extreme value, etc.
-    Non-parametric *doesn't* encode these assumptions about data distribution
-      Has less statistical power, but is still quite powerful enough if data set is large enough
-      So, if data set big enough, use non-parametric since it uses fewer assumptions
-    Historically, most stats texts/courses teach non-parametric only as an afterthought
-      Reason: parametric easily computed using tables; non-parametric needs computer so you can do great many calculations
-
-Reason for comparing TSS values with TES values:
-  TES is essentially control to see if your data make sense
-    We expect to see lots of TF binding around TSS, but hardly around TES
-    So, if your proximal-to-TSS and proximal-to-TES areas are about the same size, if you see roughly equal rates of binding in the two, you know something's messed up
-
-Definitions for location analysis:
-  Proximal promoter: -1500 nt to 500 nt around TSS
-  Proximal TES: -500 nt to 1500 nt around TES
-  Inside gene: anything between TSS and TES
-  Distal: everything else
-Note that these sets are mutually exclusive, and that they encompass entirety of genome
-
-Look at E2F1 ChIP-seq data sets -- should see heavy E2F1 binding in proximal promoters, little elsewhere
-  This is data set that gives strong signal -- good for sanity-checking pipeline
-
-Gene ontology stuff:
-  Stay with ChIPpeakAnno
-  Enable multiple test correction
-    Use Benjamini-H method
-  Output both full (raw data) list, as well as simplified
-  Simplified data list:
-    Gene name
-    GO term (brain development, etc.)
-    Count in data set
-    Count in genome
-    Corrected p value
