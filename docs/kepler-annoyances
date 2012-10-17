@@ -46,3 +46,12 @@ External execution:
     This would make use of external tools more transparent -- similar to built-in tools
 
 What is the difference between Run Composite Actor and CompositeActor?
+
+When collection of actors pasted from one workflow into a composite actor, then get scattered all asunder on composite actor's workflow canvas
+
+Figure 3.14 in user manual is completely nonsensical -- doesn't show $DirName anywhere
+
+Can save subworkflows after opening them from main workflow
+  This confuses user -- will it be automatically saved or will it not?
+
+When I clicked "New output port" button in toolbar, port was added to off-screen part of canvas so that I had to scroll to see it

@@ -22,6 +22,11 @@ Misc:
 
 Questions:
   Why can't I chain multiple commands in Kepler?
+  How best to determine gene expression levels?
+
+Next:
+  Integrate other components into workflow (e.g., location analysis)
+  Develop small test workflows for each component
 
 ============
 Small things
