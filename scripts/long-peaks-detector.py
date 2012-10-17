@@ -10,7 +10,7 @@ def detect_long_peaks(input_gff_path, output_gff_path, min_peak_length):
     parsed_gff = gff.parse_gff_line(line)
     feature_length = parsed_gff['end'] - parsed_gff['start'] + 1
     if feature_length >= min_peak_length:
-      output_gff.write(line + "\n")
+      output_gff.write(line)
 
   output_gff.close()
   output_gff.close()
