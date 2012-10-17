@@ -55,3 +55,5 @@ Can save subworkflows after opening them from main workflow
   This confuses user -- will it be automatically saved or will it not?
 
 When I clicked "New output port" button in toolbar, port was added to off-screen part of canvas so that I had to scroll to see it
+
+When editing string constant's display name, no key combo to "Commit" change -- must cilck Commit button
