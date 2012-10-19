@@ -97,6 +97,9 @@ def prepare_reference_sets(transcripts_filename, proximal_promoter_boundaries,
 
 def analyze_peak(peak_line, reference_sets, output_files):
   peak = gff.parse_gff_line(peak_line)
+  if peak is None:
+    return
+
   peak_range = (peak['start'], peak['end'])
   seqname = peak['seqname'].lower()
 
