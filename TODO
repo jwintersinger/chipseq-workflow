@@ -25,10 +25,7 @@ Questions:
   How best to determine gene expression levels?
 
 Next:
-  Integrate other components into workflow (e.g., location analysis)
-    Pathway analysis
-    Location analysis
-    GO
+  Why does running pathway analysis with "macs-example" dataset error out because no pathways found, but not with "test" dataset (which is a subset of it)?
   Develop small test workflows for each component
 
 ============
