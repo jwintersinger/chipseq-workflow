@@ -29,6 +29,8 @@ Next:
     To fix this, make workflow tolerant to "no pathways found" error in ChIPpeakAnno
   Develop small test workflows for each component
   Make results window display only after all terminal actors have finished executing
+  Remove "shared knowledge" between scripts and composite actors regarding multiple output names
+    e.g., for GO actor, instead of hardcoding output name in both workflow and script, make script take separate parameters for each output file name
 
 ============
 Small things
