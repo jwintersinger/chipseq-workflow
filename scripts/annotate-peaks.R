@@ -11,10 +11,10 @@ parse_arguments <- function() {
                 dest='extended_peaks',
                 type='character',
                 help='Path to CSV file containing extended peaks data'),
-    make_option(c('-o', '--output-dir'),
-                dest='output_dir',
+    make_option(c('-o', '--output'),
+                dest='output_file',
                 type='character',
-                help='Directory in which to store output'),
+                help='File in which to store annotated peaks'),
     make_option(c('-a', '--annotation-db'),
                 dest='annotation_db',
                 type='character',
@@ -30,7 +30,7 @@ parse_arguments <- function() {
   option_parser <- OptionParser(option_list = option_list)
   opts <- parse_args(option_parser)
 
-  for(opt in list('basic_peaks', 'extended_peaks', 'output_dir')) {
+  for(opt in list('basic_peaks', 'extended_peaks', 'output_file')) {
     if(is.null(opts[[opt]])) {
       stop(paste('Missing required argument:', opt))
     }
@@ -105,8 +105,7 @@ main <- function() {
     'TSS'
   )
 
-  all_peaks_output <- paste(opts$output_dir, '/all_peaks.gff', sep='')
-  export.gff3(annotated_peaks, all_peaks_output)
+  export.gff3(annotated_peaks, opts$output_file)
 }
 
 main()
