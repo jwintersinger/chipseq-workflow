@@ -26,7 +26,9 @@ Questions:
 
 Next:
   Why does running pathway analysis with "macs-example" dataset error out because no pathways found, but not with "test" dataset (which is a subset of it)?
+    To fix this, make workflow tolerant to "no pathways found" error in ChIPpeakAnno
   Develop small test workflows for each component
+  Make results window display only after all terminal actors have finished executing
 
 ============
 Small things
