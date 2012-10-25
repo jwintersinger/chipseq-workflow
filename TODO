@@ -32,6 +32,11 @@ Next:
   Remove "shared knowledge" between scripts and composite actors regarding multiple output names
     e.g., for GO actor, instead of hardcoding output name in both workflow and script, make script take separate parameters for each output file name
 
+  Before publishing:
+    Fix pathway analysis
+    Eliminate redundant parameters
+    Add parameters for window to proximal promoter determination
+
 ============
 Small things
 ============
