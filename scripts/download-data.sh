@@ -1,5 +1,7 @@
 #!/bin/sh
-# Download all data sets necessary to run workflow.
+# Download all data sets necessary to run workflow. Note that data will be
+# stored in the ../data directory, relative to the directory in which this
+# script is located.
 
 # Download the human reference genome and concatenate into a single Fasta file.
 # Needed to pull out peak sequences for motif finding.

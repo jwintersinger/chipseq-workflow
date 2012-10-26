@@ -10,7 +10,7 @@ OS (including OS X). Notably, it will not work on Windows.
 1. Ensure the following are installed:
   * R
   * Python 2.7
-  * Kepler 2.3
+  * Kepler 2.3 or later
 
 2. Install the following Bioconductor packages:
   * ChIPpeakAnno
@@ -18,16 +18,23 @@ OS (including OS X). Notably, it will not work on Windows.
   * optparse
   * reactome.db
 
+  This can be done thusly from within R:
+    source("http://bioconductor.org/biocLite.R")
+    biocLite('ChIPpeakAnno')
+    biocLite('rtracklayer')
+    biocLite('optparse')
+    biocLite('reactome.db')
+
 3. Install the following tools, ensuring their executables are in the user's $PATH:
-   * bedtools
-   * MACS
-   * MEME
+   * bedtools: http://code.google.com/p/bedtools/
+   * MACS:     http://liulab.dfci.harvard.edu/MACS/
+   * MEME:     http://meme.ebi.edu.au/meme/intro.html
 
 4. Run scripts/download-data.sh to download the human reference sequence and example ChIP-seq data.
 
 5. Run Kepler. Open transcriptionFactorPeakProcessor.kar from the workflows/ directory.
 
-6. Adjust the workflow's parameters as necessary. At the least, you must change Base directory.
+6. Adjust the workflow's parameters as necessary. At the least, you must change "Base directory".
 
 7. Run the workflow.
 
