@@ -2,50 +2,35 @@
 Big things
 ==========
 Location analysis: Generate histogram showing peak locations
-
-Gene ontology
-  Do via gene names, not chromosome locatinos
-    Gene names source: genes with peaks in proximal promoter
-Pathway analysis
-  ChIPpeakAnno can do basic form of this
-  Otherwise: DAVID, etc.
-Peak examples
-  Look at bringing into UCSC
-
-Misc:
-  Bring our actors into Kepler -- add to internal library
-    Modularize actors, build test suite around them
-      Don't need unit tests necessarily -- manual good enough to start with
-  Ensure I'm using "traditional" transcripts -- from RefSeq
-    Sometimes we have bunch of genes together that are transcribed as single unit, then (perhaps) modified post-transcriptionally to separate
-      This we don't want -- plays havoc with analysis of TSS
-
-Questions:
-  Why can't I chain multiple commands in Kepler?
-  How best to determine gene expression levels?
-
-Next:
-  Why does running pathway analysis with "macs-example" dataset error out because no pathways found, but not with "test" dataset (which is a subset of it)?
-    To fix this, make workflow tolerant to "no pathways found" error in ChIPpeakAnno
-  Develop small test workflows for each component
-  Make results window display only after all terminal actors have finished executing
-  Remove "shared knowledge" between scripts and composite actors regarding multiple output names
-    e.g., for GO actor, instead of hardcoding output name in both workflow and script, make script take separate parameters for each output file name
-
-  Before publishing:
-    Fix pathway analysis
-    Eliminate redundant parameters
-    Add parameters for window to proximal promoter determination
+Peak examples: Look at bringing into UCSC
+Bring custom actors into Kepler -- add to internal library
+Build test suite around actors
+Build individual workflows for each actor to allow testing in isolation
 
 ============
 Small things
 ============
-Disable allowDisconnectedGraphs for director
-Do I need to sort my GFF file for peak stats/histograms actor to work?
-Investigate supporting gene expression levels for non-human data sets
-Update Python scripts to use named rather than positional parameters
-Deal with Windows path munging if necessary -- foward slash -> backslash
-  Good means of dealing with this in Python: os.path.normpath
+Why does running pathway analysis with "macs-example" dataset error out because no pathways found, but not with "test" dataset (which is a subset of it)?
+  To fix this, make workflow tolerant to "no pathways found" error in ChIPpeakAnno
+Make results window display only after all terminal actors have finished executing
+Remove "shared knowledge" between scripts and composite actors regarding multiple output names
+  e.g., for GO actor, instead of hardcoding output name in both workflow and script, make script take separate parameters for each output file name
+Eliminate redundant parameters
+Add parameters for window to proximal promoter determination
+Update MEME script to use named rather than positional parameters
 
-Break workflow into modular components
-  Establish test suite to verify proper behaviour
+=====
+Notes
+=====
+Ensure I'm using "traditional" transcripts -- from RefSeq
+  Sometimes we have bunch of genes together that are transcribed as single unit, then (perhaps) modified post-transcriptionally to separate
+    This we don't want -- plays havoc with analysis of TSS
+
+=========
+Questions
+=========
+How best to determine gene expression levels?
+  Investigate supporting gene expression levels for non-human data sets
+Do I need to sort my GFF file for peak stats/histograms actor to work?
+
+Update pathways file parameter
