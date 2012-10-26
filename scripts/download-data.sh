@@ -24,6 +24,7 @@ function download_grch37() {
 
 OLD_WD="$(pwd)"
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+mkdir -p $SCRIPT_DIR/../data
 cd $SCRIPT_DIR/../data
 
 mkdir -p reference-genome/GRCh37 hon sada
