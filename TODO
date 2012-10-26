@@ -15,8 +15,6 @@ Why does running pathway analysis with "macs-example" dataset error out because 
 Make results window display only after all terminal actors have finished executing
 Remove "shared knowledge" between scripts and composite actors regarding multiple output names
   e.g., for GO actor, instead of hardcoding output name in both workflow and script, make script take separate parameters for each output file name
-Eliminate redundant parameters
-Add parameters for window to proximal promoter determination
 Update MEME script to use named rather than positional parameters
 
 =====
