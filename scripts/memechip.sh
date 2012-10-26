@@ -1,5 +1,6 @@
 #!/bin/sh
 # Run MEME workflow for ChIP-seq data.
+# TODO: switch to using named rather than positional parameters.
 
 peak_regions="$1"
 jaspar_path="$2"
