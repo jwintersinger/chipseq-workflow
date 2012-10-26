@@ -57,3 +57,10 @@ Can save subworkflows after opening them from main workflow
 When I clicked "New output port" button in toolbar, port was added to off-screen part of canvas so that I had to scroll to see it
 
 When editing string constant's display name, no key combo to "Commit" change -- must cilck Commit button
+
+If I accidentally add a connection off to nowhere to an actor, then hit undo, it undoes not only that action, but also whatever I did before
+
+Editing any part of a workflow -- even something as innocuous as embedded documentation -- while the workflow is running causes the workflow to error out
+
+When dragging around a connection for a new workflow, the "stickiness" parameter for existing lines is far too high
+  My parameter will readily "stick" to lines connecting existing actors; when multiple lines are on the canvas in a reasonably small space, I get stuck on each repeatedly, requiring numerous tries to position my connection where I want it without sticking to existing lines
