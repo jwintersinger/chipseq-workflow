@@ -34,11 +34,12 @@ download_grch37
 cd ..
 
 # Hon's histone methylation data
-cd ../hon
+# Note: this is commented out because the current pipeline is focused on TF binding, not histone methylation.
+#cd ../hon
 # H3K9me3 data
-wget ftp://ftp.ncbi.nlm.nih.gov/pub/geo/DATA/supplementary/samples/GSM721nnn/GSM721135/GSM721135_HCC1954.merged.H3K9me3.nodup.bam
+#wget ftp://ftp.ncbi.nlm.nih.gov/pub/geo/DATA/supplementary/samples/GSM721nnn/GSM721135/GSM721135_HCC1954.merged.H3K9me3.nodup.bam
 # Control data
-wget ftp://ftp.ncbi.nlm.nih.gov/pub/geo/DATA/supplementary/samples/GSM721nnn/GSM721139/GSM721139_HCC1954.merged.input.nodup.bam
+#wget ftp://ftp.ncbi.nlm.nih.gov/pub/geo/DATA/supplementary/samples/GSM721nnn/GSM721139/GSM721139_HCC1954.merged.input.nodup.bam
 
 # Sada's LIN9 data
 cd ../sada
