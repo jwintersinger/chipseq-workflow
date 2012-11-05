@@ -1,0 +1,20 @@
+--- universe_wsgi.ini.sample	2012-11-04 14:27:56.376637132 -0700
++++ universe_wsgi.ini	2012-11-04 18:41:06.519879858 -0700
+@@ -385,7 +385,7 @@
+ 
+ # Add an option to the library upload form which allows administrators to
+ # upload a directory of files.
+-#library_import_dir = None
++library_import_dir = /mnt/brussels/work/chipseq-workflow/data
+ 
+ # Add an option to the library upload form which allows authorized
+ # non-administrators to upload a directory of files.  The configured directory
+@@ -456,7 +456,7 @@
+ # of the server, and will have access to create users, groups, roles,
+ # libraries, and more.  For more information, see:
+ # http://wiki.g2.bx.psu.edu/Admin/Interface
+-#admin_users = None
++admin_users = user@example.org
+ 
+ # Force everyone to log in (disable anonymous access).
+ #require_login = False

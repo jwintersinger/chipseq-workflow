@@ -1,0 +1,11 @@
+--- tool_conf.xml.sample	2012-11-04 18:33:10.783230265 -0700
++++ tool_conf.xml	2012-11-04 19:01:28.279835811 -0700
+@@ -1,5 +1,8 @@
+ <?xml version="1.0"?>
+ <toolbox>
++  <section name="ChIP-Seq" id="chipseq">
++    <tool file="chipseq/macs.xml" />
++  </section>
+   <section name="Get Data" id="getext">
+     <tool file="data_source/upload.xml"/>
+     <tool file="data_source/ucsc_tablebrowser.xml" />
