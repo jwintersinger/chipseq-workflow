@@ -1,0 +1,19 @@
+<tool id="detect_long_peaks" name="Detect long peaks">
+  <description>Detect long peaks </description>
+  <command interpreter="python">long-peaks-detector.py -m $long_peak_threshold $intervals_file long_peaks.gff</command>
+
+  <inputs>
+    <param name="intervals_file" label="Intervals file" type="data" format="gff" />
+    <param name="long_peak_threshold" label="Long peak threshold" type="integer" value="5000" />
+  </inputs>
+
+  <outputs>
+    <data name="basic_peaks" format="gff" from_work_dir="long_peaks.gff" />
+  </outputs>
+
+  <stdio>
+    <exit_code range="1:" level="fatal" description="Unspecified error" />
+  </stdio>
+
+  <help>I am a giant *banana*.</help>
+</tool>

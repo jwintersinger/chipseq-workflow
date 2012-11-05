@@ -14,3 +14,7 @@ Fixed in galaxy-central
 By default, should assume that if tool produces non-zero exit code, it failed; otherwise, succeeded
 
 Running "run.sh" without parameters results in CTRL+C not working to exit
+
+Right-hand listing of tool execution isn't terribly clear
+  Visualization is too close to underlying implementation -- programmers think of numerically ordered steps, so that's what they show
+  Better would be showing graph with edges between workflow steps
