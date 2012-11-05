@@ -9,7 +9,7 @@ def parse_group(group):
 
 def parse_gff_line(line):
   line = line.strip()
-  if line.startswith('#'):
+  if line.startswith('#') or len(line) == 0:
     return None
 
   tokens = line.split()
