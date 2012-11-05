@@ -56,7 +56,7 @@ annotate_peaks <- function(
   annotation_db,
   feature_location # 'TSS' or 'geneEnd'
 ) {
-  peaks_basic <- import(basic_peaks_filename)
+  peaks_basic <- import.gff(basic_peaks_filename)
   peaks_extended <- read.table(extended_peaks_filename, header=T)
 
   # Annotate peaks

@@ -1,5 +1,5 @@
 <tool id="detect_long_peaks" name="Detect long peaks">
-  <description>Detect long peaks </description>
+  <description>Detect long peaks</description>
   <command interpreter="python">long-peaks-detector.py -m $long_peak_threshold $intervals_file long_peaks.gff</command>
 
   <inputs>
