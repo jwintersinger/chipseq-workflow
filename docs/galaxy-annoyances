@@ -1,0 +1,16 @@
+When trying to upload folder into data library:
+  Error attempting to display contents of library (New data library):
+  (OperationalError) no such column: True u'SELECT dataset_permissions.id AS
+  dataset_permissions_id, dataset_permissions.create_time AS
+  dataset_permissions_create_time, dataset_permissions.update_time AS
+  dataset_permissions_update_time, dataset_permissions.action AS
+  dataset_permissions_action, dataset_permissions.dataset_id AS
+  dataset_permissions_dataset_id, dataset_permissions.role_id AS
+  dataset_permissions_role_id XnFROM dataset_permissions XnWHERE True AND
+  dataset_permissions.action = ?' ['access'].
+Fixed in galaxy-central
+  http://gmod.827538.n3.nabble.com/Error-while-uploading-data-from-local-directory-td4026137.html
+
+By default, should assume that if tool produces non-zero exit code, it failed; otherwise, succeeded
+
+Running "run.sh" without parameters results in CTRL+C not working to exit

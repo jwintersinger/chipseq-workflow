@@ -1,0 +1,21 @@
+<tool id="locate_peaks" name="Locate peaks">
+  <description>Locate peaks from ChIP reads</description>
+  <command>macs14 -t $treatment_file -c $control_file -g $genome_size -n macs</command>
+
+  <inputs>
+    <param name="treatment_file" label="Treatment file" type="data" format="bed" />
+    <param name="control_file" label="Control file" type="data" format="bed" />
+    <param name="genome_size" label="Genome size" type="text" value="hs" />
+  </inputs>
+
+  <outputs>
+    <data name="basic_peaks" format="bed" from_work_dir="macs_peaks.bed" />
+    <data name="extended_peaks" format="tabular" from_work_dir="macs_peaks.xls" />
+  </outputs>
+
+  <stdio>
+    <exit_code range="1:" level="fatal" description="Unspecified error" />
+  </stdio>
+
+  <help>I am a giant *banana*.</help>
+</tool>
