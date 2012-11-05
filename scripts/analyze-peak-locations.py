@@ -114,6 +114,11 @@ def analyze_peak(peak_line, reference_sets, output_files):
     output_files['distal'].write(peak_line)
 
 def analyze_peak_locations(peaks_filename, reference_sets, output_dir):
+  try:
+    os.makedirs(output_dir, 0o755)
+  except OSError:
+    pass
+
   peaks_file = open(peaks_filename)
   output_files = {
     'proximal_tss': 'proximal_tss.gff',

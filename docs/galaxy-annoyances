@@ -18,3 +18,12 @@ Running "run.sh" without parameters results in CTRL+C not working to exit
 Right-hand listing of tool execution isn't terribly clear
   Visualization is too close to underlying implementation -- programmers think of numerically ordered steps, so that's what they show
   Better would be showing graph with edges between workflow steps
+
+Error message when running R scripts:
+  ProgrammingError: (ProgrammingError) You must not use 8-bit bytestrings unless you use a text_factory that can interpret 8-bit bytestrings (like text_factory = str). It is highly recommended that you instead just switch your application to Unicode strings. u'UPDATE job SET update_time=?, state=?, stdout=?, stderr=? WHERE job.id = ?' ['2012-11-05 16:46:03.532167', 'ok', '', 'Warning message:\nreplacing previous import \xe2\x80\x98space\xe2\x80\x99 when loading \xe2\x80\x98IRanges\xe2\x80\x99 \n', 26]
+
+Why does this script take 100% CPU when a CPU-intensive process is run by Galaxy?
+  python ./scripts/paster.py serve universe_wsgi.ini
+
+No good way to group multiple outputs -- they all appear as separate items
+  I'd rather they appear as group, since they're related to each another, and so they'd take up less space in history

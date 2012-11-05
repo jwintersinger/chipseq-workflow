@@ -1,0 +1,26 @@
+<tool id="analyze_peak_locations" name="Analyze peak locations">
+  <description>Analyze peak locations</description>
+  <command interpreter="python">analyze-peak-locations.py --proximal-tss-upstream-nts $proximal_tss_upstream_nts --proximal-tss-downstream-nts $proximal_tss_downstream_nts --proximal-tes-upstream-nts $proximal_tes_upstream_nts --proximal-tes-downstream-nts $proximal_tes_downstream_nts $annotated_peaks_file $transcripts_file results/</command>
+
+  <inputs>
+    <param name="annotated_peaks_file" label="Annotated peaks file" type="data" format="gff" />
+    <param name="transcripts_file" label="Transcripts file" type="data" format="gff" />
+    <param name="proximal_tss_upstream_nts" label="Proximal TSS upstream NTs" type="integer" value="500" />
+    <param name="proximal_tss_downstream_nts" label="Proximal TSS downstream NTs" type="integer" value="1500" />
+    <param name="proximal_tes_upstream_nts" label="Proximal TES upstream NTs" type="integer" value="1500" />
+    <param name="proximal_tes_downstream_nts" label="Proximal TES downstream NTs" type="integer" value="500" />
+  </inputs>
+
+  <outputs>
+    <data name="proximal_tss_peaks" label="Proximal TSS peaks" format="gff" from_work_dir="results/proximal_tss.gff" />
+    <data name="proximal_tes_peaks" label="Proximal TES peaks" format="gff" from_work_dir="results/proximal_tes.gff" />
+    <data name="distal_peaks" label="Distal peaks" format="gff" from_work_dir="results/distal.gff" />
+    <data name="inside_gene_peaks" label="Inside gene peaks" format="gff" from_work_dir="results/inside_gene.gff" />
+  </outputs>
+
+  <stdio>
+    <exit_code range="1:" level="fatal" description="Unspecified error" />
+  </stdio>
+
+  <help>I am a giant *banana*.</help>
+</tool>

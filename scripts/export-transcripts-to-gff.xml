@@ -1,0 +1,18 @@
+<tool id="export_transcripts" name="Export transcripts">
+  <description>Export transcripts</description>
+  <command interpreter="Rscript">export-transcripts-to-gff.R --reference-assembly $reference_assembly transcripts.gff 2>/dev/null</command>
+
+  <inputs>
+    <param name="reference_assembly" label="Reference assembly" type="text" value="TSS.human.GRCh37" />
+  </inputs>
+
+  <outputs>
+    <data name="transcripts" format="gff" from_work_dir="transcripts.gff" />
+  </outputs>
+
+  <stdio>
+    <exit_code range="1:" level="fatal" description="Unspecified error" />
+  </stdio>
+
+  <help>I am a giant *banana*.</help>
+</tool>

@@ -24,6 +24,11 @@ Ensure I'm using "traditional" transcripts -- from RefSeq
   Sometimes we have bunch of genes together that are transcribed as single unit, then (perhaps) modified post-transcriptionally to separate
     This we don't want -- plays havoc with analysis of TSS
 
+======
+Galaxy
+======
+Implement custom data format for "extended peaks", beyond "tabular"
+
 =========
 Questions
 =========
