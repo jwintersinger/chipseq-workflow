@@ -1,0 +1,300 @@
+{
+    "a_galaxy_workflow": "true", 
+    "annotation": "", 
+    "format-version": "0.1", 
+    "name": "ChIP-seq analysis", 
+    "steps": {
+        "0": {
+            "annotation": "", 
+            "id": 0, 
+            "input_connections": {}, 
+            "inputs": [
+                {
+                    "description": "", 
+                    "name": "Treatment file"
+                }
+            ], 
+            "name": "Input dataset", 
+            "outputs": [], 
+            "position": {
+                "left": 292, 
+                "top": 370
+            }, 
+            "tool_errors": null, 
+            "tool_id": null, 
+            "tool_state": "{\"name\": \"Treatment file\"}", 
+            "tool_version": null, 
+            "type": "data_input", 
+            "user_outputs": []
+        }, 
+        "1": {
+            "annotation": "", 
+            "id": 1, 
+            "input_connections": {}, 
+            "inputs": [
+                {
+                    "description": "", 
+                    "name": "Control file"
+                }
+            ], 
+            "name": "Input dataset", 
+            "outputs": [], 
+            "position": {
+                "left": 321, 
+                "top": 474
+            }, 
+            "tool_errors": null, 
+            "tool_id": null, 
+            "tool_state": "{\"name\": \"Control file\"}", 
+            "tool_version": null, 
+            "type": "data_input", 
+            "user_outputs": []
+        }, 
+        "2": {
+            "annotation": "", 
+            "id": 2, 
+            "input_connections": {}, 
+            "inputs": [], 
+            "name": "Export transcripts", 
+            "outputs": [
+                {
+                    "name": "transcripts", 
+                    "type": "gff"
+                }
+            ], 
+            "position": {
+                "left": 1312, 
+                "top": 685
+            }, 
+            "post_job_actions": {
+                "HideDatasetActiontranscripts": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "transcripts"
+                }
+            }, 
+            "tool_errors": null, 
+            "tool_id": "export_transcripts", 
+            "tool_state": "{\"reference_assembly\": \"\\\"TSS.human.GRCh37\\\"\", \"__page__\": 0, \"chromInfo\": \"\\\"/mnt/brussels/work/galaxy-central/tool-data/shared/ucsc/chrom/?.len\\\"\"}", 
+            "tool_version": "1.0.0", 
+            "type": "tool", 
+            "user_outputs": []
+        }, 
+        "3": {
+            "annotation": "", 
+            "id": 3, 
+            "input_connections": {
+                "control_file": {
+                    "id": 1, 
+                    "output_name": "output"
+                }, 
+                "treatment_file": {
+                    "id": 0, 
+                    "output_name": "output"
+                }
+            }, 
+            "inputs": [], 
+            "name": "Locate peaks", 
+            "outputs": [
+                {
+                    "name": "basic_peaks", 
+                    "type": "bed"
+                }, 
+                {
+                    "name": "extended_peaks", 
+                    "type": "tabular"
+                }
+            ], 
+            "position": {
+                "left": 595, 
+                "top": 390
+            }, 
+            "post_job_actions": {}, 
+            "tool_errors": null, 
+            "tool_id": "locate_peaks", 
+            "tool_state": "{\"control_file\": \"null\", \"genome_size\": \"\\\"hs\\\"\", \"treatment_file\": \"null\", \"chromInfo\": \"\\\"/mnt/brussels/work/galaxy-central/tool-data/shared/ucsc/chrom/?.len\\\"\", \"__page__\": 0}", 
+            "tool_version": "1.0.0", 
+            "type": "tool", 
+            "user_outputs": []
+        }, 
+        "4": {
+            "annotation": "", 
+            "id": 4, 
+            "input_connections": {
+                "input": {
+                    "id": 3, 
+                    "output_name": "basic_peaks"
+                }
+            }, 
+            "inputs": [], 
+            "name": "BED-to-GFF", 
+            "outputs": [
+                {
+                    "name": "out_file1", 
+                    "type": "gff"
+                }
+            ], 
+            "position": {
+                "left": 840, 
+                "top": 323
+            }, 
+            "post_job_actions": {
+                "HideDatasetActionout_file1": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "out_file1"
+                }
+            }, 
+            "tool_errors": null, 
+            "tool_id": "bed2gff1", 
+            "tool_state": "{\"input\": \"null\", \"chromInfo\": \"\\\"/mnt/brussels/work/galaxy-central/tool-data/shared/ucsc/chrom/?.len\\\"\", \"__page__\": 0}", 
+            "tool_version": "2.0.0", 
+            "type": "tool", 
+            "user_outputs": []
+        }, 
+        "5": {
+            "annotation": "", 
+            "id": 5, 
+            "input_connections": {
+                "intervals_file": {
+                    "id": 4, 
+                    "output_name": "out_file1"
+                }
+            }, 
+            "inputs": [], 
+            "name": "Detect long peaks", 
+            "outputs": [
+                {
+                    "name": "basic_peaks", 
+                    "type": "gff"
+                }
+            ], 
+            "position": {
+                "left": 1066, 
+                "top": 320
+            }, 
+            "post_job_actions": {}, 
+            "tool_errors": null, 
+            "tool_id": "detect_long_peaks", 
+            "tool_state": "{\"__page__\": 0, \"intervals_file\": \"null\", \"chromInfo\": \"\\\"/mnt/brussels/work/galaxy-central/tool-data/shared/ucsc/chrom/?.len\\\"\", \"long_peak_threshold\": \"\\\"5000\\\"\"}", 
+            "tool_version": "1.0.0", 
+            "type": "tool", 
+            "user_outputs": []
+        }, 
+        "6": {
+            "annotation": "Having line \"##gff-version 2\" in GFF input to rtracklayer's import function results in the load taking forever, consuming 100% CPU all the while.", 
+            "id": 6, 
+            "input_connections": {
+                "input": {
+                    "id": 4, 
+                    "output_name": "out_file1"
+                }
+            }, 
+            "inputs": [], 
+            "name": "Select", 
+            "outputs": [
+                {
+                    "name": "out_file1", 
+                    "type": "input"
+                }
+            ], 
+            "position": {
+                "left": 1052, 
+                "top": 507
+            }, 
+            "post_job_actions": {
+                "RenameDatasetActionout_file1": {
+                    "action_arguments": {
+                        "newname": "Called peaks"
+                    }, 
+                    "action_type": "RenameDatasetAction", 
+                    "output_name": "out_file1"
+                }
+            }, 
+            "tool_errors": null, 
+            "tool_id": "Grep1", 
+            "tool_state": "{\"__page__\": 0, \"input\": \"null\", \"invert\": \"\\\"true\\\"\", \"chromInfo\": \"\\\"/mnt/brussels/work/galaxy-central/tool-data/shared/ucsc/chrom/?.len\\\"\", \"pattern\": \"\\\"^#\\\"\"}", 
+            "tool_version": "1.0.1", 
+            "type": "tool", 
+            "user_outputs": []
+        }, 
+        "7": {
+            "annotation": "", 
+            "id": 7, 
+            "input_connections": {
+                "basic_peaks_file": {
+                    "id": 6, 
+                    "output_name": "out_file1"
+                }, 
+                "extended_peaks_file": {
+                    "id": 3, 
+                    "output_name": "extended_peaks"
+                }
+            }, 
+            "inputs": [], 
+            "name": "Annotate peaks", 
+            "outputs": [
+                {
+                    "name": "annotated_peaks", 
+                    "type": "gff"
+                }
+            ], 
+            "position": {
+                "left": 1319, 
+                "top": 385
+            }, 
+            "post_job_actions": {}, 
+            "tool_errors": null, 
+            "tool_id": "annotate_peaks", 
+            "tool_state": "{\"__page__\": 0, \"reference_assembly\": \"\\\"TSS.human.GRCh37\\\"\", \"extended_peaks_file\": \"null\", \"basic_peaks_file\": \"null\", \"annotation_db\": \"\\\"org.Hs.eg.db\\\"\", \"chromInfo\": \"\\\"/mnt/brussels/work/galaxy-central/tool-data/shared/ucsc/chrom/?.len\\\"\"}", 
+            "tool_version": "1.0.0", 
+            "type": "tool", 
+            "user_outputs": []
+        }, 
+        "8": {
+            "annotation": "", 
+            "id": 8, 
+            "input_connections": {
+                "annotated_peaks_file": {
+                    "id": 7, 
+                    "output_name": "annotated_peaks"
+                }, 
+                "transcripts_file": {
+                    "id": 2, 
+                    "output_name": "transcripts"
+                }
+            }, 
+            "inputs": [], 
+            "name": "Analyze peak locations", 
+            "outputs": [
+                {
+                    "name": "proximal_tss_peaks", 
+                    "type": "gff"
+                }, 
+                {
+                    "name": "proximal_tes_peaks", 
+                    "type": "gff"
+                }, 
+                {
+                    "name": "distal_peaks", 
+                    "type": "gff"
+                }, 
+                {
+                    "name": "inside_gene_peaks", 
+                    "type": "gff"
+                }
+            ], 
+            "position": {
+                "left": 1595, 
+                "top": 419
+            }, 
+            "post_job_actions": {}, 
+            "tool_errors": null, 
+            "tool_id": "analyze_peak_locations", 
+            "tool_state": "{\"proximal_tes_downstream_nts\": \"\\\"500\\\"\", \"proximal_tes_upstream_nts\": \"\\\"1500\\\"\", \"transcripts_file\": \"null\", \"__page__\": 0, \"proximal_tss_upstream_nts\": \"\\\"500\\\"\", \"proximal_tss_downstream_nts\": \"\\\"1500\\\"\", \"annotated_peaks_file\": \"null\", \"chromInfo\": \"\\\"/mnt/brussels/work/galaxy-central/tool-data/shared/ucsc/chrom/?.len\\\"\"}", 
+            "tool_version": "1.0.0", 
+            "type": "tool", 
+            "user_outputs": []
+        }
+    }
+}
