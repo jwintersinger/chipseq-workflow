@@ -27,3 +27,9 @@ Why does this script take 100% CPU when a CPU-intensive process is run by Galaxy
 
 No good way to group multiple outputs -- they all appear as separate items
   I'd rather they appear as group, since they're related to each another, and so they'd take up less space in history
+
+--------------------------
+Things I like about Galaxy
+--------------------------
+Being able to queue tools to run on datasets not yet produced is brilliant
+Tools that have no data dependencies on each other will automatically be run in parallel

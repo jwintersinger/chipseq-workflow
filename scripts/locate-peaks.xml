@@ -9,8 +9,8 @@
   </inputs>
 
   <outputs>
-    <data name="basic_peaks" format="bed" from_work_dir="macs_peaks.bed" />
-    <data name="extended_peaks" format="tabular" from_work_dir="macs_peaks.xls" />
+    <data name="basic_peaks" label="Basic peaks data" format="bed" from_work_dir="macs_peaks.bed" />
+    <data name="extended_peaks" label="Extended peaks data" format="tabular" from_work_dir="macs_peaks.xls" />
   </outputs>
 
   <stdio>

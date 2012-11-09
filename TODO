@@ -28,6 +28,13 @@ Ensure I'm using "traditional" transcripts -- from RefSeq
 Galaxy
 ======
 Implement custom data format for "extended peaks", beyond "tabular"
+Why does rtracklayer take extremely long time to load ~14k-line GFF file produced by Galaxy with "##gff-version 2" line in it?
+  Removing this line makes data load almost instantly
+  "##bed_to_gff_converter.py" line has no effect on load time, so problem isn't simply comment lines
+Make longer the input fields (annotation DB, etc.) on "Annotate peaks"
+Adjust naming of tools -- names likely only necessary when multiple outputs produced by a tool
+  Make "verby" rather than "nouny"
+  Include number of input dataset when renaming
 
 =========
 Questions
