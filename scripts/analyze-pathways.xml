@@ -1,0 +1,19 @@
+<tool id="analyze_pathways" name="Analyze pathways">
+  <description>Analyze pathways of associated gene IDs</description>
+  <command interpreter="Rscript">analyze-pathways.R --annotation-db $annotation_db --gene-ids $gene_names_file --output-file pathways.csv 2>/dev/null</command>
+
+  <inputs>
+    <param name="gene_names_file" label="Gene names" type="data" format="tabular" />
+    <param name="annotation_db" label="Annotation DB" type="text" value="org.Hs.eg.db" />
+  </inputs>
+
+  <outputs>
+    <data name="pathways" label="Pathways" format="csv" from_work_dir="pathways.csv" />
+  </outputs>
+
+  <stdio>
+    <exit_code range="1:" level="fatal" description="Unspecified error" />
+  </stdio>
+
+  <help>I am a giant *banana*.</help>
+</tool>

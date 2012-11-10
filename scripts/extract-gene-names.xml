@@ -1,0 +1,18 @@
+<tool id="extract_gene_names" name="Extract gene names">
+  <description>Extract gene names</description>
+  <command interpreter="python">extract-gene-names.py $gff_file > gene-names</command>
+
+  <inputs>
+    <param name="gff_file" label="GFF file" type="data" format="gff" />
+  </inputs>
+
+  <outputs>
+    <data name="gene_names" label="Gene names" format="tabular" from_work_dir="gene-names" />
+  </outputs>
+
+  <stdio>
+    <exit_code range="1:" level="fatal" description="Unspecified error" />
+  </stdio>
+
+  <help>I am a giant *banana*.</help>
+</tool>

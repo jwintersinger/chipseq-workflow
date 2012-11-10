@@ -3,10 +3,10 @@ Detect long peaks
 Annotate peaks
 Analyze peak locations
 
-Generate peak stats and plots
 Determine gene ontology
 Analyze pathways
 Find motifs
+Generate peak stats and plots
 
 Convert BED to GFF
 Extract proximal TSS gene names
