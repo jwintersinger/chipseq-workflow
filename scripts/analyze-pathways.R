@@ -54,14 +54,24 @@ main <- function() {
   suppressPackageStartupMessages(library(reactome.db))
 
   ensembl_gene_ids <- readLines(opts$gene_ids)
-  pathways <- getEnrichedPATH(
-    ensembl_gene_ids,
-    orgAnn = opts$annotation_db,
-    pathAnn = 'reactome.db',
-    feature_id_type = 'ensembl_gene_id',
-    maxP = opts$max_p_value,
-    minPATHterm = opts$min_term_count,
-    multiAdjMethod = opts$p_value_adjuster
+  # Use try() so that if error relating to "No enriched pathway can be found"
+  # is produced, the script does not exit with a non-zero error code.
+  tryCatch({
+    pathways <- getEnrichedPATH(
+      ensembl_gene_ids,
+      orgAnn = opts$annotation_db,
+      pathAnn = 'reactome.db',
+      feature_id_type = 'ensembl_gene_id',
+      maxP = opts$max_p_value,
+      minPATHterm = opts$min_term_count,
+      multiAdjMethod = opts$p_value_adjuster
+    )},
+    error = function(err) {
+      # Output empty file to indicate no pathways found.
+      cat('', file=opts$output_filename)
+      print(err)
+      quit()
+    }
   )
 
   # Sort by count.InDataset column.
