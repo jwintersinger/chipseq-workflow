@@ -8,6 +8,10 @@ import argparse
 import os
 import sys
 
+# os.path.realpath() gets full path to __file__, so code below works even when
+# __file__ is a filename without a directory part.
+script_dir = os.path.dirname(os.path.realpath(__file__))
+sys.path.append(os.path.join(script_dir, '..'))
 import gff
 
 def write_line(dest_file, token):
@@ -44,7 +48,7 @@ def extract_fields(gff_path, output_dir):
       feature_spacing = current_feature_start - prev_feature_start
       write_line(output_files['feature_spacings'], feature_spacing)
     prev_feature_start = current_feature_start
-    
+
   for feature_type in feature_types:
     write_line(output_files['feature_types'], feature_type)
 
