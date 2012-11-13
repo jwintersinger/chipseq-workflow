@@ -1,0 +1,36 @@
+<tool id="memechip" name="Find motifs">
+  <description>Find motifs in ChIP data</description>
+  <command interpreter="bash">
+    memechip.sh
+    -p $peak_regions_file
+    -j /mnt/brussels/work/chipseq-workflow/data/jaspar/JASPAR_CORE_2009.meme
+    -r /mnt/brussels/work/chipseq-workflow/data/reference-genome/GRCh37/combined.fa
+    -w $sequence_width
+    -s $sequences_to_sample
+    -t $max_run_time
+    -f $motifs_to_find
+    -m $min_motif_width
+    -n $max_motif_width
+    -o ${html_outfile.files_path}
+  </command>
+
+  <inputs>
+    <param name="peak_regions_file" label="Peak regions file" type="data" format="gff" />
+    <param name="sequence_width" label="Sequence width" type="integer" value="100" />
+    <param name="sequences_to_sample" label="Sequences to sample" type="integer" value="300" />
+    <param name="max_run_time" label="Max run time (s)" type="integer" value="7200"/>
+    <param name="motifs_to_find" label="Motifs to find" type="integer" value="3" />
+    <param name="min_motif_width" label="Min motif width" type="integer" value="6" />
+    <param name="max_motif_width" label="Max motif width" type="integer" value="30" />
+  </inputs>
+
+  <outputs>
+    <data name="html_outfile" label="Found motifs" format="html" from_work_dir="index.html" />
+  </outputs>
+
+  <stdio>
+    <exit_code range="1:" level="fatal" description="Unspecified error" />
+  </stdio>
+
+  <help>I am a giant *banana*.</help>
+</tool>
