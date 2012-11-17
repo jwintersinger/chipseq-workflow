@@ -8,9 +8,9 @@
   </inputs>
 
   <outputs>
-    <data name="molecular_functions" label="Molecular functions" format="csv" from_work_dir="molecular_functions.csv" />
-    <data name="biological_processes" label="Biological processes" format="csv" from_work_dir="biological_processes.csv" />
-    <data name="cellular_components" label="Cellular components" format="csv" from_work_dir="cellular_components.csv" />
+    <data name="molecular_functions" label="Molecular functions from ${on_string}" format="csv" from_work_dir="molecular_functions.csv" />
+    <data name="biological_processes" label="Biological processes from ${on_string}" format="csv" from_work_dir="biological_processes.csv" />
+    <data name="cellular_components" label="Cellular components from ${on_string}" format="csv" from_work_dir="cellular_components.csv" />
   </outputs>
 
   <stdio>

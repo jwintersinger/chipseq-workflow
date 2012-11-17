@@ -12,10 +12,10 @@
   </inputs>
 
   <outputs>
-    <data name="proximal_tss_peaks" label="Proximal TSS peaks" format="gff" from_work_dir="results/proximal_tss.gff" />
-    <data name="proximal_tes_peaks" label="Proximal TES peaks" format="gff" from_work_dir="results/proximal_tes.gff" />
-    <data name="distal_peaks" label="Distal peaks" format="gff" from_work_dir="results/distal.gff" />
-    <data name="inside_gene_peaks" label="Inside gene peaks" format="gff" from_work_dir="results/inside_gene.gff" />
+    <data name="proximal_tss_peaks" label="Proximal TSS peaks from data ${annotated_peaks_file.hid}" format="gff" from_work_dir="results/proximal_tss.gff" />
+    <data name="proximal_tes_peaks" label="Proximal TES peaks from data ${annotated_peaks_file.hid}" format="gff" from_work_dir="results/proximal_tes.gff" />
+    <data name="distal_peaks" label="Distal peaks from data ${annotated_peaks_file.hid}" format="gff" from_work_dir="results/distal.gff" />
+    <data name="inside_gene_peaks" label="Inside-gene peaks from data ${annotated_peaks_file.hid}" format="gff" from_work_dir="results/inside_gene.gff" />
   </outputs>
 
   <stdio>

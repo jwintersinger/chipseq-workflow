@@ -7,11 +7,11 @@
   </inputs>
 
   <outputs>
-    <data name="feature_lengths_histogram" label="Feature lengths histogram" format="pdf" from_work_dir="feature_lengths.pdf" />
-    <data name="feature_spacings_histogram" label="Feature spacings histogram" format="pdf" from_work_dir="feature_spacings.pdf" />
-    <data name="scores_histogram" label="Scores histogram" format="pdf" from_work_dir="scores.pdf" />
-    <data name="feature_types" label="Feature types" format="tabular" from_work_dir="feature_types" />
-    <data name="scores_stats" label="Scores stats" format="tabular" from_work_dir="scores_stats" />
+    <data name="feature_lengths_histogram" label="Feature lengths histogram on ${on_string}" format="pdf" from_work_dir="feature_lengths.pdf" />
+    <data name="feature_spacings_histogram" label="Feature spacings histogram on ${on_string}" format="pdf" from_work_dir="feature_spacings.pdf" />
+    <data name="scores_histogram" label="Scores histogram on ${on_string}" format="pdf" from_work_dir="scores.pdf" />
+    <data name="feature_types" label="Feature types on ${on_string}" format="tabular" from_work_dir="feature_types" />
+    <data name="scores_stats" label="Scores stats on ${on_string}" format="tabular" from_work_dir="scores_stats" />
   </outputs>
 
   <stdio>
