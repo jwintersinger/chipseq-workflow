@@ -7,17 +7,10 @@ Bring custom actors into Kepler -- add to internal library
 Build test suite around actors
 Build individual workflows for each actor to allow testing in isolation
 
-Develop quick-and-dirty status presentation:
-  For each of Kepler and Galaxy:
-    1. Screenshot of pipeline
-    2. Known problems
-    3. Areas for improvement
-    4. Development comments
-    5. Summary
-  11. Kepler vs. Galaxy
-    Final pipeline
-    Development
-
+Gene expression
+Compare ChIP-seq data sets
+  Look at Anya's paper
+  Perhaps PolII always associated with your TF -- we wish to find this
 
 ============
 Small things
