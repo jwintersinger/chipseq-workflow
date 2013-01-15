@@ -1,0 +1,34 @@
+--- universe_wsgi.ini.sample	2012-12-05 15:00:06.850579594 -0700
++++ universe_wsgi.ini 2013-01-15 11:51:27.700999105 -0700
+@@ -32,6 +32,7 @@
+ # will not be accessible over the network).  Use '0.0.0.0' to listen on all
+ # available network interfaces.
+ #host = 127.0.0.1
++host = 0.0.0.0
+ 
+ # Use a threadpool for the web server instead of creating a thread for each
+ # request.
+@@ -90,6 +91,7 @@
+ # instead.  This string takes many options which are explained in detail in the
+ # config file documentation.
+ #database_connection = sqlite:///./database/universe.sqlite?isolation_level=IMMEDIATE
++database_connection=postgres://galaxy@localhost/galaxy
+ 
+ # If the server logs errors about not having enough database pool connections,
+ # you will want to increase these values, or consider running more Galaxy
+@@ -396,6 +398,7 @@
+ # Add an option to the library upload form which allows administrators to
+ # upload a directory of files.
+ #library_import_dir = None
++library_import_dir = /mnt/brussels/work/chipseq-workflow/data
+ 
+ # Add an option to the library upload form which allows authorized
+ # non-administrators to upload a directory of files.  The configured directory
+@@ -467,6 +470,7 @@
+ # libraries, and more.  For more information, see:
+ # http://wiki.g2.bx.psu.edu/Admin/Interface
+ #admin_users = None
++admin_users = admin@example.org
+ 
+ # Force everyone to log in (disable anonymous access).
+ #require_login = False
