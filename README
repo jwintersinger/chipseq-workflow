@@ -7,10 +7,61 @@ October 26, 2012
 The pipeline has been tested on 64-bit Arch Linux, but should work on any *nix
 OS (including OS X). Notably, it will not work on Windows.
 
+--------------------
+Galaxy configuration
+--------------------
+1. Install Galaxy.
+     cd ~
+     hg clone https://bitbucket.org/galaxy/galaxy-central/ galaxy
+   Note that we use the development version of Galaxy rather than the stable one
+   (i.e., galaxy-central rather than galaxy-dist).
+
+2. Install and configure PostgreSQL as database. If the default SQLite is used
+   with Galaxy instead, errors will result when workflows are initiated because
+   the multple processes started by Galaxy will try to access the database
+   concurrently.
+     su - postgres
+     createuser galaxy
+     createdb --owner galaxy galaxy
+
+3. Check out ChIP-seq workflow.
+  cd ~
+  git clone https://github.com/jwintersinger/chipseq-workflow.git
+  git checkout -b galaxy origin/galaxy
+
+4. Add ChIP-seq scripts to Galaxy.
+  cd ~/galaxy/tools
+  ln -s ~/chipseq-workflow/scripts chipseq
+
+5. Modify Galaxy config files.
+  cd ~/galaxy
+  cp universe_wsgi.ini.sample universe_wsgi.ini
+  cp tool_conf.xml.sample tool_conf.xml
+  patch -p0 < ~/chipseq-workflow/galaxy/tool_conf.xml.diff
+  patch -p0 < ~/chipseq-workflow/galaxy/universe_wsgi.ini.diff
+
+6. Fix MEMEChIP data file paths, if you plan to use MEMEChIP.
+  cd ~/galaxy/tools/chipseq
+  vim memechip.xml
+  # Change paths to JASPAR_CORE_2009.meme and combined.fa.
+
+7. Provide Python symlink for Galaxy so that it invokes Python 2 rather than
+   Python 3.
+  cd ~/galaxy
+  mkdir python/
+  cd python
+  ln -s /usr/bin/python2 python
+
+8. Run Galaxy.
+  cd ~/galaxy
+  PATH=$PWD/python:$PATH ./run.sh --reload
+
+-------------
+Install tools
+-------------
 1. Ensure the following are installed:
   * R
   * Python 2.7
-  * Kepler 2.3 or later
 
 2. Install the following Bioconductor packages:
   * ChIPpeakAnno
@@ -25,35 +76,28 @@ OS (including OS X). Notably, it will not work on Windows.
     biocLite('optparse')
     biocLite('reactome.db')
 
-3. Install the following tools, ensuring their executables are in the user's $PATH:
+3. Install the following tools, then place their executables on the user's $PATH:
+
    * bedtools: http://code.google.com/p/bedtools/
+       tar xvzf BEDTools.v2.17.0.tar.gz
+       cd bedtools-2.17.0
+       make
+       mv bin ~/.apps/beddtools-2.17.0
+
    * MACS:     http://liulab.dfci.harvard.edu/MACS/
+       tar xvzf MACS-1.4.2-1.tar.gz
+       cd MACS-1.4.2
+       python2 setup.py install --prefix ~/.apps/macs-1.4.2
+       # Must add ~/.apps/macs-1.4.2/lib/python2.7/site-packages to $PYTHONPATH before running macs14.
+
    * MEME:     http://meme.ebi.edu.au/meme/intro.html
+       pacman -S tcsh # MEME requires csh as interpreter
+       tar xvzf meme_4.9.0.tar.gz
+       cd meme_4.9.0
+       ./configure --prefix ~/.apps/meme-4.9.0
+       make && make install
 
-4. Run scripts/download-data.sh to download the human reference sequence and example ChIP-seq data.
-
-5. Run Kepler. Open transcriptionFactorPeakProcessor.kar from the workflows/ directory.
-
-6. Adjust the workflow's parameters as necessary. At the least, you must change "Base directory".
-
-7. Run the workflow.
-
-
-============
-Known Issues
-============
-1. No gene expression data is currently used. Though previous revisions of this
-   pipeline included this functionality, it was done in an extremely hacky
-   manner. If neccessary, this functionality can be restored.
-
-2. The web browser displaying the results directory opens too early. I would
-   like to delay it until all the terminal actors feeding into it have finished
-   executing, but I do not know how. I need an actor that can take multiple
-   inputs (one from each terminal actor), then fire only when it has received
-   data from all those inputs -- this would trigger the display of results.
-
-3. When the pathway analysis step fails to find any pathways, the workflow will
-   halt. To fix this, I need simply modify the code that runs ChIPpeakAnno's
-   pathway-finding functionality so that when on pathways are found, the script
-   does not exit with an error. (This same problem may also be present for the
-   GO code, since it also relies on ChIPpeakAnno.)
+----------------
+Run the workflow
+----------------
+Open http://localhost:8080 in your web browser.
